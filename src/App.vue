@@ -12,13 +12,15 @@
       <RouterView />
     </main>
 
-    <footer>
+    <footer id="footer">
       <p>&copy; 2025 Car Showcase. All rights reserved.</p>
     </footer>
   </div>
 </template>
 
 <script>
+import './style.css'
+
 export default {
   name: 'App',
 }
