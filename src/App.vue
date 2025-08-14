@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <header>
-      <h1>Car Showcase</h1>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/favourites">Favourites</RouterLink>
-      </nav>
+    <header class="app-header">
+      <div class="container header-content">
+        <h1 class="logo">Car Showcase</h1>
+        <nav class="nav-links">
+          <RouterLink to="/" class="nav-link" active-class="active">Home</RouterLink>
+          <RouterLink to="/favourites" class="nav-link" active-class="active"
+            >Favourites</RouterLink
+          >
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="app-main container">
       <RouterView />
     </main>
 
-    <footer id="footer">
-      <p>&copy; 2025 Car Showcase. All rights reserved.</p>
+    <footer class="app-footer">
+      <div class="container">
+        <p>&copy; 2025 Car Showcase. All rights reserved.</p>
+      </div>
     </footer>
   </div>
 </template>
