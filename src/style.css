@@ -79,3 +79,88 @@ body {
   text-align: center;
   font-size: 0.9rem;
 }
+
+/* Home.vue */
+.home {
+  padding: 1rem;
+}
+
+.car-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.car-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-align: center;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.car-card:hover {
+  transform: scale(1.02);
+}
+
+.car-card img {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* AddCar.vue */
+.add-car {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-car h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.add-car-form .form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-car-form label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.add-car-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4cafef;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #389fd9;
+}
