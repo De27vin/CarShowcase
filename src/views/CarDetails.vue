@@ -1,6 +1,6 @@
 <template>
   <div v-if="car" class="car-detail container">
-    <button @click="$router.push('/')" class="btn back-btn">⬅ Return</button>
+    <button @click="goBack" class="btn back-btn">⬅ Return</button>
 
     <div class="car-card-detail">
       <div class="car-image-wrapper">
@@ -15,37 +15,39 @@
           <li><strong>Horsepower:</strong> {{ car.hp }} HP</li>
         </ul>
 
-        <button class="btn favourite-btn">⭐ Add to Favourites</button>
+        <button class="btn favourite-btn" @click="toggleFavourite">
+          <span v-if="isFav">⭐ In Favourites</span>
+          <span v-else>☆ Add to Favourites</span>
+        </button>
       </div>
     </div>
   </div>
 
   <div v-else class="not-found container">
     <p>Car not found!</p>
-    <button @click="$router.push('/')" class="btn">Back to Homepage</button>
+    <button @click="goBack" class="btn">Back to Homepage</button>
   </div>
 </template>
 
-<script>
-import carsCollection from '../assets/cars.json'
+<script setup>
+import { computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useCarStore } from '../stores/cars.js'
 
-export default {
-  name: 'CarDetails',
-  props: ['id'],
-  data() {
-    return {
-      car: null,
-    }
-  },
-  mounted() {
-    const carId = parseInt(this.id)
+const route = useRoute()
+const router = useRouter()
+const store = useCarStore()
 
-    const carsWithImages = carsCollection.map((car) => ({
-      ...car,
-      image: new URL(`../assets/carPictures/${car.image}`, import.meta.url).href,
-    }))
+const id = computed(() => Number(route.params.id))
 
-    this.car = carsWithImages.find((c) => c.id === carId)
-  },
-}
+const car = computed(() => store.cars.find((c) => c.id === id.value))
+
+const isFav = computed(() => store.favourites.includes(id.value))
+
+const toggleFavourite = () => store.toggleFavourite(id.value)
+const goBack = () => router.push('/')
+
+onMounted(() => {
+  store.loadFromLocalStorage()
+})
 </script>

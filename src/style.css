@@ -243,4 +243,32 @@ body {
 .not-found {
   text-align: center;
   padding: 2rem;
-}
+}
+
+/* Favourites.vue */
+.favourites {
+  padding: 1rem;
+}
+
+.favourites h1 {
+  margin-bottom: 1rem;
+}
+
+.favourites .empty {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.remove-btn {
+  margin-top: 0.5rem;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #d32f2f;
+}

@@ -11,7 +11,7 @@ const pinia = createPinia()
 app.use(router)
 app.use(pinia)
 
-const carStore = useCarStore()
+const carStore = useCarStore(pinia)
 carStore.loadFromLocalStorage()
 
 app.mount('#app')
