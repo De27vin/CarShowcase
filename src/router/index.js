@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import CarDetails from '../views/CarDetails.vue'
 import AddCar from '../views/AddCar.vue'
 import Favourites from '../views/Favourites.vue'
+import EditCar from '../views/EditCar.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/favourites',
       name: 'Favourites',
       component: Favourites,
+    },
+    {
+      path: '/edit/:id',
+      name: 'EditCar',
+      component: EditCar,
+      props: true,
     },
   ],
 })

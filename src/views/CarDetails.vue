@@ -19,6 +19,8 @@
           <span v-if="isFav">⭐ In Favourites</span>
           <span v-else>☆ Add to Favourites</span>
         </button>
+
+        <button class="btn danger-btn" @click="deleteCar(car.id)">🗑 Delete Car</button>
       </div>
     </div>
   </div>
@@ -46,6 +48,13 @@ const isFav = computed(() => store.favourites.includes(id.value))
 
 const toggleFavourite = () => store.toggleFavourite(id.value)
 const goBack = () => router.push('/')
+
+const deleteCar = (id) => {
+  if (confirm('Are you sure you want to delete this car?')) {
+    store.deleteCar(id)
+    router.push('/')
+  }
+}
 
 onMounted(() => {
   store.loadFromLocalStorage()
