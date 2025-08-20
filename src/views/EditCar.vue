@@ -1,36 +1,67 @@
 <template>
-  <div class="container">
+  <div class="edit-car container">
     <h1>Edit Car</h1>
-    <form @submit.prevent="update">
-      <input v-model="car.brand" placeholder="Brand" required />
-      <input v-model="car.model" placeholder="Model" required />
-      <input v-model.number="car.year" placeholder="Year" required />
-      <input v-model.number="car.hp" placeholder="Horsepower" required />
-      <input v-model="car.image" placeholder="Image filename" required />
+
+    <form @submit.prevent="updateCar" class="car-form">
+      <label>
+        Brand:
+        <input v-model="form.brand" required />
+      </label>
+
+      <label>
+        Model:
+        <input v-model="form.model" required />
+      </label>
+
+      <label>
+        Year:
+        <input v-model.number="form.year" type="number" required />
+      </label>
+
+      <label>
+        Horsepower (HP):
+        <input v-model.number="form.hp" type="number" required />
+      </label>
+
+      <label>
+        Image URL:
+        <input v-model="form.image" type="text" />
+      </label>
 
       <button type="submit" class="btn">💾 Save Changes</button>
+      <RouterLink to="/" class="btn back-btn">Cancel</RouterLink>
     </form>
   </div>
 </template>
 
-<script>
-import { useCarStore } from '../stores/cars'
-import { useRouter } from 'vue-router'
+<script setup>
+import { reactive, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useCarStore } from '../stores/cars.js'
 
-export default {
-  props: ['id'],
-  setup(props) {
-    const carStore = useCarStore()
-    const router = useRouter()
+const route = useRoute()
+const router = useRouter()
+const store = useCarStore()
 
-    const car = { ...carStore.cars.find((c) => c.id === parseInt(props.id)) }
+const form = reactive({
+  id: null,
+  brand: '',
+  model: '',
+  year: '',
+  hp: '',
+  image: '',
+})
 
-    const update = () => {
-      carStore.updateCar(car)
-      router.push(`/car/${car.id}`)
-    }
+onMounted(() => {
+  store.loadFromLocalStorage()
+  const car = store.cars.find((c) => c.id === Number(route.params.id))
+  if (car) {
+    Object.assign(form, car) // kopiert alle Werte ins Formular
+  }
+})
 
-    return { car, update }
-  },
+const updateCar = () => {
+  store.updateCar({ ...form })
+  router.push(`/car/${form.id}`)
 }
 </script>

@@ -30,14 +30,6 @@ export const useCarStore = defineStore('cars', {
       this.saveToLocalStorage()
     },
 
-    updateCar(updated) {
-      const idx = this.cars.findIndex((c) => c.id === updated.id)
-      if (idx !== -1) {
-        this.cars[idx] = { ...updated }
-        this.saveToLocalStorage()
-      }
-    },
-
     deleteCar(id) {
       this.cars = this.cars.filter((c) => c.id !== id)
       this.favourites = this.favourites.filter((fid) => fid !== id)
@@ -74,6 +66,14 @@ export const useCarStore = defineStore('cars', {
     saveToLocalStorage() {
       localStorage.setItem('cars', JSON.stringify(this.cars))
       localStorage.setItem('favourites', JSON.stringify(this.favourites))
+    },
+
+    updateCar(updatedCar) {
+      const index = this.cars.findIndex((c) => c.id === updatedCar.id)
+      if (index !== -1) {
+        this.cars[index] = updatedCar
+        this.saveToLocalStorage()
+      }
     },
   },
 })

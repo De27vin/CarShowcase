@@ -20,6 +20,7 @@
           <span v-else>☆ Add to Favourites</span>
         </button>
 
+        <RouterLink :to="`/edit/${car.id}`" class="btn">✏ Edit Car</RouterLink>
         <button class="btn danger-btn" @click="deleteCar(car.id)">🗑 Delete Car</button>
       </div>
     </div>
