@@ -7,7 +7,7 @@
       <RouterLink to="/" class="btn">Browse cars</RouterLink>
     </div>
 
-    <div v-else class="car-list">
+    <div v-else class="car-list-favourites">
       <div v-for="car in favouriteCars" :key="car.id" class="car-card" @click="goToCar(car.id)">
         <img :src="car.image" :alt="car.model" />
         <h2>{{ car.brand }} {{ car.model }}</h2>

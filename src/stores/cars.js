@@ -4,7 +4,7 @@ import seed from '../assets/cars.json'
 export const useCarStore = defineStore('cars', {
   state: () => ({
     cars: [],
-    favourites: [], // <-- nur IDs
+    favourites: [],
   }),
 
   getters: {
@@ -40,14 +40,14 @@ export const useCarStore = defineStore('cars', {
 
     deleteCar(id) {
       this.cars = this.cars.filter((c) => c.id !== id)
-      this.favourites = this.favourites.filter((fid) => fid !== id) // aus Favs entfernen
+      this.favourites = this.favourites.filter((fid) => fid !== id)
       this.saveToLocalStorage()
     },
 
     toggleFavourite(id) {
       const set = new Set(this.favourites)
       set.has(id) ? set.delete(id) : set.add(id)
-      this.favourites = Array.from(set) // de-duped
+      this.favourites = Array.from(set)
       this.saveToLocalStorage()
     },
 

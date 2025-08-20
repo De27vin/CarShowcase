@@ -299,3 +299,9 @@ body {
 .remove-btn:hover {
   background-color: #d32f2f;
 }
+
+.car-list-favourites {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
