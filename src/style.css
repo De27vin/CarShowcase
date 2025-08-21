@@ -208,6 +208,16 @@ body {
   background-color: #389fd9;
 }
 
+.image-preview {
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 200px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
 /* CarDetails.vue */
 .container {
   max-width: 960px;

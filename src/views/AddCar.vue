@@ -1,69 +1,68 @@
 <template>
-  <div class="add-car">
-    <h1>Add New Car</h1>
-    <form @submit.prevent="submitForm" class="add-car-form">
-      <div class="form-group">
-        <label for="brand">Brand</label>
-        <input type="text" id="brand" v-model="newCar.brand" required />
+  <div class="add-car container">
+    <h1>Add a New Car</h1>
+
+    <form @submit.prevent="addCar" class="car-form">
+      <label>Brand:</label>
+      <input v-model="brand" required />
+
+      <label>Model:</label>
+      <input v-model="model" required />
+
+      <label>Year:</label>
+      <input type="number" v-model="year" required />
+
+      <label>Horsepower:</label>
+      <input type="number" v-model="hp" required />
+
+      <label>Image:</label>
+      <input type="file" accept="image/*" @change="onFileChange" />
+
+      <div v-if="preview" class="image-preview">
+        <p>Preview:</p>
+        <img :src="preview" alt="Preview" />
       </div>
 
-      <div class="form-group">
-        <label for="model">Model</label>
-        <input type="text" id="model" v-model="newCar.model" required />
-      </div>
-
-      <div class="form-group">
-        <label for="year">Year</label>
-        <input type="number" id="year" v-model="newCar.year" required />
-      </div>
-
-      <div class="form-group">
-        <label for="hp">Horsepower (PS)</label>
-        <input type="number" id="hp" v-model="newCar.hp" required />
-      </div>
-
-      <div class="form-group">
-        <label for="image">Image Filename</label>
-        <input type="text" id="image" v-model="newCar.image" placeholder="example.jpg" />
-      </div>
-
-      <button type="submit" class="submit-btn">Add Car</button>
+      <button type="submit" class="btn">✅ Add Car</button>
     </form>
   </div>
 </template>
 
-<script>
-import { useCarStore } from '../stores/cars.js'
-import { reactive } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCarStore } from '../stores/cars.js'
 
-export default {
-  name: 'AddCar',
-  setup() {
-    const carStore = useCarStore()
-    const router = useRouter()
+const router = useRouter()
+const store = useCarStore()
 
-    const newCar = reactive({
-      brand: '',
-      model: '',
-      year: '',
-      hp: '',
-      image: '',
-    })
+const brand = ref('')
+const model = ref('')
+const year = ref('')
+const hp = ref('')
+const image = ref('')
+const preview = ref('')
 
-    const submitForm = () => {
-      // Optional: Bildpfad automatisch ergänzen
-      if (newCar.image) {
-        newCar.image = new URL(`../assets/carPictures/${newCar.image}`, import.meta.url).href
-      }
-      carStore.addCar({ ...newCar })
-      router.push('/') // zurück zur Home-Seite
-    }
+const onFileChange = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
 
-    return {
-      newCar,
-      submitForm,
-    }
-  },
+  const reader = new FileReader()
+  reader.onload = () => {
+    image.value = reader.result
+    preview.value = reader.result
+  }
+  reader.readAsDataURL(file)
+}
+
+const addCar = () => {
+  store.addCar({
+    brand: brand.value,
+    model: model.value,
+    year: parseInt(year.value),
+    hp: parseInt(hp.value),
+    image: image.value || null,
+  })
+  router.push('/')
 }
 </script>

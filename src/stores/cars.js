@@ -25,8 +25,8 @@ export const useCarStore = defineStore('cars', {
     },
 
     addCar(car) {
-      const newId = this.cars.length ? Math.max(...this.cars.map((c) => c.id)) + 1 : 1
-      this.cars.push({ id: newId, ...car })
+      car.id = Date.now()
+      this.cars.push(car)
       this.saveToLocalStorage()
     },
 
