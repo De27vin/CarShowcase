@@ -5,7 +5,14 @@
       <RouterLink to="/add" class="add-btn">+ Add Car</RouterLink>
     </div>
 
-    <div class="sort-controls">
+    <div class="controls">
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="🔍 Search by brand or model..."
+        class="search-input"
+      />
+
       <label for="sort">Sort by:</label>
       <select v-model="sortOption" id="sort" class="sort-select">
         <option value="alphabetical">Brand (A → Z)</option>
@@ -14,10 +21,15 @@
       </select>
     </div>
 
-    <div v-if="cars.length === 0">There are no cars here...</div>
+    <div v-if="sortedAndFilteredCars.length === 0">No cars match your search...</div>
 
     <div class="car-list">
-      <div v-for="car in sortedCars" :key="car.id" class="car-card" @click="goToCar(car.id)">
+      <div
+        v-for="car in sortedAndFilteredCars"
+        :key="car.id"
+        class="car-card"
+        @click="goToCar(car.id)"
+      >
         <img :src="car.image" :alt="car.model" />
         <h2>{{ car.brand }} {{ car.model }}</h2>
         <p>{{ car.year }} • {{ car.hp }} PS</p>
@@ -35,6 +47,7 @@ export default {
   setup() {
     const carStore = useCarStore()
     const sortOption = ref('alphabetical')
+    const searchQuery = ref('')
 
     onMounted(() => {
       carStore.loadFromLocalStorage()
@@ -58,10 +71,17 @@ export default {
       }
     })
 
+    const sortedAndFilteredCars = computed(() => {
+      return sortedCars.value.filter((car) =>
+        `${car.brand} ${car.model}`.toLowerCase().includes(searchQuery.value.toLowerCase()),
+      )
+    })
+
     return {
       cars: carStore.cars,
-      sortedCars,
+      sortedAndFilteredCars,
       sortOption,
+      searchQuery,
       goToCar,
     }
   },

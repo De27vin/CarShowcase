@@ -140,15 +140,18 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.sort-controls {
+.controls {
   margin: 1rem 0;
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
   align-items: center;
-  gap: 0.5rem;
 }
 
-.sort-select {
-  padding: 0.3rem 0.6rem;
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.4rem 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
